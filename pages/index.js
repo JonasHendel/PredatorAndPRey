@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Chart from '../components/Chart2';
+import Chart from '../components/Chart';
 
 const Home = () => {
 	const [predArr, setPredArr] = useState([500]);
@@ -81,14 +81,14 @@ const Home = () => {
 	}, [preyArr, simulate]);
 
 	return (
-		<div className='bg-gray-900 h-screen text-white'>
+		<div className='bg-gray-900 min-h-screen text-white'>
 			<div className='w-full flex flex-col items-center'>
 				<h1 className='text-3xl my-5'>Prey and Predator</h1>
-				<p className='w-2/5 text-center'>
+				<p className='w-96 md:w-2/5 text-center'>
 					Two pairs are picked. If the pair contains two prey, there is a 50% chance they will breed. If the pair consists of 2 predators, they both die. If the pair consists of a prey and a
 					predator, there is a 50% chance the predator kills they prey and gets a child, if the prey escapes they both survive.{' '}
 				</p>
-				<div className='flex items-center'>
+				<div className='flex items-center flex-wrap justify-center'>
 					<button onClick={() => setSimulate((prevState) => !prevState)} className={`border-2 rounded-md px-4 h-10 mr-10 mt-5 w-28 sm:text-lg text-white ${simulate && 'border-green-400'}`}>
 						Simulate
 					</button>
