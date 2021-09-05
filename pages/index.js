@@ -2,73 +2,45 @@ import { useEffect, useState } from 'react';
 import Chart from '../components/Chart2';
 
 const Home = () => {
-	const [predators, setPredators] = useState(500);
-	const [prey, setPrey] = useState(500);
-	const [array, setArray] = useState([]);
-	const amount = predators + prey;
+	const [predArr, setPredArr] = useState([500]);
+	const [preyArr, setPreyArr] = useState([500]);
+	const [simulate, setSimulate] = useState(false);
 
-	const [predArr, setPredArr] = useState([]);
-	const [preyArr, setPreyArr] = useState([]);
-
-	// 0 = predator
-	// 1 = prey
 	let tempArr = [];
-	let predatorNum = 0;
-	let preyNum = 0;
-	const [run, setRun] = useState(false);
-	let ones = 0;
-	let zeros = 0;
 
 	const createArr = () => {
 		let arr = [];
-		for (let i = 0; i < prey; i++) {
+		for (let i = 0; i < preyArr[preyArr.length - 1]; i++) {
 			arr.push('prey');
 		}
-		for (let i = 0; i < predators; i++) {
+		for (let i = 0; i < predArr[predArr.length - 1]; i++) {
 			arr.push('predator');
 		}
 		return arr;
 	};
 
 	const getTwo = (arr) => {
-		// console.log('length', arr.length)
-
 		let random = Math.floor(Math.random() * arr.length);
 
 		const type1 = arr[random];
-
-		// console.log('random', random)
-
-		// console.log('pre', arr)
-
 		arr.splice(random, 1);
-
-		// console.log('post', arr)
 
 		random = Math.floor(Math.random() * arr.length);
+
 		const type2 = arr[random];
 		arr.splice(random, 1);
-		// console.log('length', arr.length)
 
-		const num = Math.round(Math.random());
-		const num2 = Math.round(Math.random());
-
-		num === 1 ? ones++ : zeros++;
-		num2 === 1 ? ones++ : zeros++;
-
-		type1 === 'predator' ? predatorNum++ : preyNum++;
-		type2 === 'predator' ? predatorNum++ : preyNum++;
 		return [
-			{ type: type1, num: num },
-			{ type: type2, num: num2 },
+			{ type: type1, num: Math.round(Math.random()) },
+			{ type: type2, num: Math.round(Math.random()) },
 		];
 	};
 
 	const oneRound = () => {
-		let tempPrey = prey;
-		let tempPred = predators;
+		let tempPrey = preyArr[preyArr.length - 1];
+		let tempPred = predArr[predArr.length - 1];
 		const arr = createArr();
-		for (let i = 0; i < (predators + prey) / 2; i++) tempArr.push(getTwo(arr));
+		for (let i = 0; i < (tempPred + tempPrey) / 2; i++) tempArr.push(getTwo(arr));
 		tempArr.map((pair) => {
 			if (pair[0].type === pair[1].type) {
 				if (pair[0].type === 'prey') {
@@ -76,57 +48,67 @@ const Home = () => {
 						tempPrey++;
 					}
 					return;
-					console.log(pair, 'two preys');
 				}
 				if (pair[0].type === 'predator') {
-					console.log(pair, 'two predators');
 					tempPred = tempPred - 2;
 				}
 			}
 			if (pair[0].type !== pair[1].type) {
 				if (pair[0].num === pair[1].num) {
-					console.log(pair, 'prey and pred same');
 					tempPrey--;
 					tempPred++;
 				}
 				if (pair[0].num !== pair[1].num) {
-					console.log(pair, 'prey and pred different');
-          return
+					return;
 				}
 			}
 		});
 		setPredArr((prevState) => [...prevState, tempPred]);
 		setPreyArr((prevState) => [...prevState, tempPrey]);
-		setPrey(tempPrey);
-		setPredators(tempPred);
-		// console.log('prey', tempPrey);
-		// console.log('predators', predators);
 	};
 
 	useEffect(() => {
-		oneRound();
-		const ran = Math.random();
-		console.log(ran);
-		console.log(Math.round(ran));
-	}, [run]);
-
-  useEffect(()=>{
-    const interval = setInterval(()=>{
-    }, 100)
-    return () => clearInterval(interval)
-  })
+		if (simulate) {
+			const interval = setInterval(() => {
+				if (preyArr[preyArr.length - 1] > 0) {
+					oneRound();
+				} else {
+					setSimulate((prevState) => !prevState);
+				}
+			}, 100);
+			return () => clearInterval(interval);
+		}
+	}, [preyArr, simulate]);
 
 	return (
-		<div>
-			<button
-				onClick={() => {
-					setRun((prevState) => !prevState);
-				}}>
-				RUn
-			</button>
-			<p>Current preys: {prey}</p>
-			<p>Current predators: {predators}</p>
-			<Chart predArr={predArr} preyArr={preyArr}/> 
+		<div className='bg-gray-900 h-screen text-white'>
+			<div className='w-full flex flex-col items-center'>
+				<h1 className='text-3xl my-5'>Prey and Predator</h1>
+				<p className='w-2/5 text-center'>
+					Two pairs are picked. If the pair contains two prey, there is a 50% chance they will breed. If the pair consists of 2 predators, they both die. If the pair consists of a prey and a
+					predator, there is a 50% chance the predator kills they prey and gets a child, if the prey escapes they both survive.{' '}
+				</p>
+				<div className='flex items-center'>
+					<button onClick={() => setSimulate((prevState) => !prevState)} className={`border-2 rounded-md px-4 h-10 mr-10 mt-5 w-28 sm:text-lg text-white ${simulate && 'border-green-400'}`}>
+						Simulate
+					</button>
+					<button
+						onClick={() => {
+							setPreyArr([500]);
+							setPredArr([500]);
+						}}
+						className='border-2 w-28 rounded-md px-4 h-10 mt-5 sm:text-lg text-white'>
+						Reset
+					</button>
+					<div className='flex mt-5 mx-10 text-xl'>
+						<p className='w-48'>Current preys: {preyArr[preyArr.length - 1]}</p>
+						<p className='w-48'>Current predators: {predArr[predArr.length - 1]}</p>
+					</div>
+				</div>
+			</div>
+			<div className='w-full flex justify-center'>
+				<Chart predArr={predArr} preyArr={preyArr} />
+			</div>
 		</div>
 	);
 };

@@ -19,14 +19,14 @@ const Chart = ({ predArr, preyArr }) => {
 	];
 
 	return (
-		<div style={{ height: '600px' }}>
+		<div className="w-5/6 h-600">
 			<ResponsiveLine
 				data={data}
-				margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-				xScale={{ type: 'linear', }}
+				margin={{ top: 50, right: 110, bottom: 50, left: 80 }}
+				xScale={{ type: 'linear' }}
 				yScale={{ type: 'linear', min: '0', max: 'auto', stacked: false, reverse: false }}
 				yFormat=' >-.2f'
-				curve='basis'
+				curve='natural'
 				axisTop={null}
 				axisRight={null}
 				axisBottom={{
@@ -44,13 +44,15 @@ const Chart = ({ predArr, preyArr }) => {
 					tickPadding: 5,
 					tickRotation: 0,
 					legend: 'Population',
-					legendOffset: -40,
+					text: {
+						font: 'inherit',
+					},
+					legendOffset: -60,
 					legendPosition: 'middle',
 				}}
 				enableGridX={false}
 				enableGridY={false}
-        colors={['#e31e63', '#42c5f5']}
-
+				colors={['#e31e63', '#42c5f5']}
 				lineWidth={4}
 				enablePoints={false}
 				pointSize={10}
@@ -62,6 +64,7 @@ const Chart = ({ predArr, preyArr }) => {
 				theme={{
 					textColor: '#ffffff',
 					fontSize: 14,
+					font: 'inherit',
 					axis: {
 						domain: {
 							line: {
@@ -69,17 +72,46 @@ const Chart = ({ predArr, preyArr }) => {
 								strokeWidth: 1,
 							},
 						},
+						legend: {
+							text: {
+								fontSize: '20px',
+								font: 'inherit',
+							},
+						},
 						ticks: {
 							line: {
 								stroke: '#ffffff',
 								strokeWidth: 1,
 							},
+							text: {
+								font: 'inherit',
+							},
 						},
 					},
 					grid: {
 						line: {
-							stroke: '#dddddd',
+							stroke: '#ffffff',
 							strokeWidth: 1,
+						},
+					},
+					tooltip: {
+						container: {
+							background: 'white',
+							color: 'black',
+							fontSize: 'inherit',
+							borderRadius: '2px',
+							boxShadow: '0 1px 2px rgba(0, 0, 0, 0.25)',
+							padding: '5px 9px',
+						},
+					},
+					crosshair: {
+						label: {
+							textColor: '#e31e63',
+						},
+						line: {
+							stroke: '#ffffff',
+							strokeWidth: 1,
+							strokeOpacity: 1,
 						},
 					},
 				}}
@@ -98,6 +130,7 @@ const Chart = ({ predArr, preyArr }) => {
 						symbolSize: 12,
 						symbolShape: 'circle',
 						symbolBorderColor: 'rgba(0, 0, 0, .5)',
+            font: 'inherit',
 						effects: [
 							{
 								on: 'hover',
