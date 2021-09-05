@@ -101,7 +101,7 @@ const Home = () => {
 						Reset
 					</button>
 					<div className='flex mt-5 mx-10 text-xl'>
-						<p className='w-48'>Current preys: {preyArr[preyArr.length - 1]}</p>
+						<p className='w-48'>Current prey: {preyArr[preyArr.length - 1]}</p>
 						<p className='w-48'>Current predators: {predArr[predArr.length - 1]}</p>
 					</div>
 				</div>
