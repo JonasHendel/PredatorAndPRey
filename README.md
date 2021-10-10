@@ -7,7 +7,7 @@ A website simulating the relations between predator and prey
 <a align="center" href="https://predatorandprey.vercel.app/">Visit Website</a>
  </p>
 <p align="center">
-<img src="https://user-images.githubusercontent.com/70843626/132389170-fb2514bd-04ca-4bfc-a80f-c0ec745c4c81.png" width=500/>
+<img src="https://user-images.githubusercontent.com/70843626/136694156-bd0d1cd4-a5c7-41c4-ad3a-13dba9cae832.png" width=500/>
  </p>
 
 <p align="center"> 
