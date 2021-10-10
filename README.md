@@ -1,7 +1,4 @@
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>Predator and Prey simulator</title>
 	<body>
 		<article id="002feeef-38f3-4ede-9f25-4893f6581cfd" class="page sans">
 			<header>
